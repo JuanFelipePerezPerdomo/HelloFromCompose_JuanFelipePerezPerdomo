@@ -1,32 +1,52 @@
 import React, { useEffect, useState } from 'react';
 import { StatusBar } from 'expo-status-bar';
 import { LinearGradient } from 'expo-linear-gradient';
+import { SafeAreaView } from 'react-native-safe-area-context';
 import { StyleSheet, Text, View, TextInput, Pressable } from 'react-native';
 
 export default function App() {
 
-  const [name, setName] =("");
+  const [name, setName] = useState("");
+  const charLimit = 20;
+  const [message, setMessage] = ("Hola ${name}");
+
+  const handleTextChange = (inputText) => {
+    setName(inputText);
+  }
+
+  const textInputStyle = [
+    styles.input,
+    {
+      borderColor: name.length > charLimit ? '#f00' : 'gray'
+    }
+  ];
+
+  useEffect
 
   return (
-    <View style={styles.container}>
+    <SafeAreaView style={styles.container}>
       <StatusBar style="auto"/>
       <Text style={styles.title}>Saludador Expo</Text>
-      
       <View style={styles.row}>
         <Pressable
-        onPress={() => alert('¡Botón presionado!')}
         style={({ pressed }) => [
           styles.button,
-          { backgroundColor: pressed ? '#D2E6FF' : '#005DE9' }
-        ]}>
-          <Text style={styles.buttonText}>Presioname</Text>
+          { backgroundColor: pressed ? '#D2E6FF' : '#005DE9' },
+          name.trim().length === 0 && styles.buttonDisabled
+        ]}
+        disabled={name.trim().length === 0 }
+        onPress={() => alert('¡Botón presionado!')}>
+          <Text style={styles.buttonText}>Saludar</Text>
         </Pressable>
         <TextInput
-          style={styles.input}
-          placeholder='Escriba su nombre Aqui'
+          maxLength={charLimit}
+          style={textInputStyle}
+          value={name}
+          onChangeText={handleTextChange}
+          placeholder='Introduce Tu Nombre'
         />
       </View>
-    </View>
+    </SafeAreaView>
   );
 }
 
@@ -44,7 +64,7 @@ const styles = StyleSheet.create({
   },
   title: {
     color: '#000',
-    fontSize: 20,
+    fontSize: 25,
     justifyContent:'flex-start',
   },
   input:{
@@ -72,4 +92,11 @@ const styles = StyleSheet.create({
     color: 'black',
     fontSize: 20
   },
+  buttonDisabled:{
+    backgroundColor: '#D2E6FF'
+  },
+  error:{
+    borderColor: '#f00',
+    color: '#f00'
+  }
 });
