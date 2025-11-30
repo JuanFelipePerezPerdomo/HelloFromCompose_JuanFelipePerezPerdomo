@@ -21,12 +21,13 @@ export default function App() {
     }
   ];
 
-
   return (
     <SafeAreaView style={styles.container}>
       <StatusBar style="auto"/>
       <View style={styles.content}>
-        <Text style={styles.title}>Saludador Expo</Text>
+        <View style={styles.header}>
+          <Text style={styles.title}>Saludador Expo</Text>
+        </View>
         <View style={styles.row}>
         <Pressable
         style={({ pressed }) => [
@@ -51,7 +52,6 @@ export default function App() {
       </Text>
       </View>
       
-      
     </SafeAreaView>
   );
 }
@@ -66,15 +66,23 @@ const styles = StyleSheet.create({
     flex: 1,
     paddingHorizontal: 20,
   },
-  row: {
-  flexDirection: 'row',
-  alignItems: 'center',
-  justifyContent: 'flex-start'
+  header:{
+    paddingTop:15,
+    paddingBottom: 20,
+    marginHorizontal: -20,
+    paddingHorizontal: 20,
+    borderBottomLeftRadius: 30,
+    borderBottomRightRadius: 30
   },
   title: {
     color: '#000',
     fontSize: 25,
     justifyContent:'flex-start',
+  },
+  row: {
+  flexDirection: 'row',
+  alignItems: 'center',
+  justifyContent: 'flex-start'
   },
   input:{
     width: 200,
